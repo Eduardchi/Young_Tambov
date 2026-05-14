@@ -11,29 +11,31 @@ export function HomePage() {
     <main>
       {/* ── Hero ─────────────────────────────────────────────────────── */}
       <section className={styles.hero} aria-labelledby="hero-heading">
-        <div className={styles.heroPhoto}>
-          <Img
-            src="/images/Главная.jpg"
-            alt=""
-            className={styles.heroImg}
-          />
-        </div>
-        <div className={styles.heroDark}>
-          <div className={styles.heroContent}>
-            <h1 id="hero-heading" className={styles.heroTitle}>
-              Тамбов<br />
-              <span className={styles.heroBlue}>молодой</span>
-            </h1>
-            <p className={styles.heroSub}>молодёжь тамбовской области</p>
-            <a
-              href="https://t.me"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.heroTg}
-              aria-label="Подписаться на Telegram"
-            >
-              Telegram — подпишись на нас
-            </a>
+        <div className={styles.heroInner}>
+          <div className={styles.heroPhoto}>
+            <Img
+              src="/images/main.jpg"
+              alt="Фото"
+              className={styles.heroImg}
+            />
+          </div>
+          <div className={styles.heroDark}>
+            <div className={styles.heroContent}>
+              <h1 id="hero-heading" className={styles.heroTitle}>
+                Тамбов<br />
+                <span className={styles.heroBlue}>молодой</span>
+              </h1>
+              <p className={styles.heroSub}>молодёжь тамбовской области</p>
+              <a
+                href="https://t.me"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.heroTg}
+                aria-label="Подписаться на Telegram"
+              >
+                Telegram — подпишись на нас
+              </a>
+            </div>
           </div>
         </div>
       </section>

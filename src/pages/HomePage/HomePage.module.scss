@@ -3,14 +3,21 @@
 // ── Hero ─────────────────────────────────────────────────────────────────────
 
 .hero {
+  // semantic wrapper — no layout here
+}
+
+.heroInner {
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--container-padding);
   display: grid;
   grid-template-columns: 42% 1fr;
-  min-height: clamp(380px, 52vh, 580px);
-  padding: 0 50px;
+  // row must be at least this tall so image fills properly
+  grid-template-rows: minmax(clamp(380px, 52vh, 580px), auto);
 
   @include respond-to('tablet') {
     grid-template-columns: 1fr;
-    min-height: auto;
+    grid-template-rows: auto;
   }
 }
 
@@ -18,6 +25,8 @@
   position: relative;
   overflow: hidden;
   border-radius: 20px;
+  // prevents grid cells from overflowing their track in older browsers
+  min-height: 0;
 
   @include respond-to('tablet') {
     height: 55vw;
@@ -26,6 +35,9 @@
 }
 
 .heroImg {
+  // absolute fill is the most reliable cross-browser way to fill a grid cell
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -40,11 +52,12 @@
   padding-inline: var(--spacing-12);
 
   @include respond-to('tablet') {
-    padding: var(--spacing-10) var(--container-padding);
+    // heroInner already provides outer padding — no side padding needed here
+    padding: var(--spacing-10) 0;
   }
 
   @include respond-to('mobile') {
-    padding: var(--spacing-8) var(--container-padding);
+    padding: var(--spacing-8) 0;
   }
 }
 
