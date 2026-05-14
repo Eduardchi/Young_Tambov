@@ -1,0 +1,134 @@
+// src/widgets/Header/Header.module.scss
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: var(--header-height);
+  background: var(--color-bg);
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--transition-base);
+
+  &--scrolled {
+    border-bottom-color: var(--color-border);
+  }
+}
+
+.inner {
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--container-padding);
+  height: 100%;
+  @include flex-between;
+  gap: var(--spacing-8);
+}
+
+// ── Logo ─────────────────────────────────────────────────────────────────────
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  flex-shrink: 0;
+  transition: opacity var(--transition-fast);
+
+  &:hover { opacity: 0.8; }
+  @include focus-ring;
+}
+
+.logoMark {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  object-fit: contain;
+}
+
+.logoText {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.logoTitle {
+  font-family: var(--font-heading);
+  font-size: var(--text-sm);
+  font-weight: 800;
+  color: var(--color-white);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.logoSub {
+  font-family: var(--font-heading);
+  font-size: 0.625rem;
+  font-weight: 600;
+  color: var(--color-accent);
+  text-transform: lowercase;
+  letter-spacing: 0.04em;
+}
+
+// ── Nav ──────────────────────────────────────────────────────────────────────
+
+.nav {
+  flex: 1;
+
+  @include respond-to('tablet') { display: none; }
+}
+
+.navList {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-1);
+}
+
+.navLink {
+  display: block;
+  padding: var(--spacing-2) var(--spacing-3);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-heading);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-2);
+  transition: color var(--transition-fast), background var(--transition-fast);
+  white-space: nowrap;
+
+  &:hover { color: var(--color-text); }
+
+  &--active {
+    color: var(--color-text);
+  }
+
+  @include focus-ring;
+}
+
+// ── Burger ───────────────────────────────────────────────────────────────────
+
+.burgerBtn {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+  padding: var(--spacing-2);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+  flex-shrink: 0;
+
+  &:hover { background: var(--color-bg-card); }
+  @include focus-ring;
+
+  @include respond-to('tablet') { display: flex; }
+}
+
+.burgerLine {
+  display: block;
+  height: 1.5px;
+  width: 100%;
+  background: var(--color-white);
+  border-radius: var(--radius-full);
+}

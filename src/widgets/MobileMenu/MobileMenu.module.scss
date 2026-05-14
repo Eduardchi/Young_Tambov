@@ -1,0 +1,77 @@
+// src/widgets/MobileMenu/MobileMenu.module.scss
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 199;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-base);
+
+  &--visible { opacity: 1; pointer-events: all; }
+}
+
+.menu {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 200;
+  width: min(300px, 88vw);
+  background: var(--color-bg-2);
+  border-left: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  padding: var(--spacing-6);
+  transform: translateX(100%);
+  transition: transform var(--transition-base);
+  overflow-y: auto;
+
+  &--open { transform: translateX(0); }
+}
+
+.menuHead {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: var(--spacing-8);
+}
+
+.closeBtn {
+  @include flex-center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  background: var(--color-bg-card);
+  color: var(--color-text-2);
+  font-size: var(--text-base);
+  cursor: pointer;
+  transition: background var(--transition-fast), color var(--transition-fast);
+
+  &:hover { background: var(--color-bg-card-2); color: var(--color-text); }
+  @include focus-ring;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+}
+
+.link {
+  display: block;
+  padding: var(--spacing-3) var(--spacing-4);
+  border-radius: var(--radius-md);
+  font-family: var(--font-heading);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-2);
+  transition: background var(--transition-fast), color var(--transition-fast);
+
+  &:hover { background: var(--color-bg-card); color: var(--color-text); }
+  &--active { color: var(--color-text); }
+  @include focus-ring;
+}

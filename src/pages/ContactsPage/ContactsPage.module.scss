@@ -1,0 +1,147 @@
+// src/pages/ContactsPage/ContactsPage.module.scss
+
+.page {
+  flex: 1;
+  background: var(--color-bg);
+}
+
+// ── Header ───────────────────────────────────────────────────────────────────
+
+.header {
+  padding: var(--spacing-16) 0 var(--spacing-12);
+  text-align: center;
+}
+
+.headerInner {
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--container-padding);
+}
+
+.title {
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--color-white);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  margin-top: var(--spacing-4);
+  font-size: var(--text-sm);
+  color: var(--color-text-2);
+  line-height: 1.6;
+}
+
+// ── Blocks ───────────────────────────────────────────────────────────────────
+
+.blocks {
+  padding-bottom: var(--spacing-16);
+}
+
+.blocksInner {
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--container-padding);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-5);
+
+  @include respond-to('mobile') { grid-template-columns: 1fr; }
+}
+
+// ── Card ─────────────────────────────────────────────────────────────────────
+
+.card {
+  border: 1px solid var(--color-border-2);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-6) var(--spacing-7);
+  background: var(--color-bg-card);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-5);
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-4);
+}
+
+.iconWrap {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  background: var(--color-accent-dim);
+  color: var(--color-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.orgName {
+  font-size: var(--text-sm);
+  font-weight: 800;
+  color: var(--color-white);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+// ── Entries ──────────────────────────────────────────────────────────────────
+
+.entries {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+}
+
+.entry {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-top: var(--spacing-4);
+  border-top: 1px solid var(--color-border);
+
+  &:first-child {
+    padding-top: 0;
+    border-top: none;
+  }
+}
+
+.entryLabel {
+  font-family: var(--font-heading);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.entryPhone {
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: var(--color-white);
+  transition: color var(--transition-fast);
+
+  &:hover { color: var(--color-accent); }
+  @include focus-ring;
+}
+
+.entryAddress,
+.entryEmail {
+  font-size: var(--text-sm);
+  color: var(--color-text-2);
+  line-height: 1.4;
+}
+
+.entryEmail {
+  transition: color var(--transition-fast);
+  &:hover { color: var(--color-accent); }
+  @include focus-ring;
+}
+

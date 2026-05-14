@@ -1,0 +1,47 @@
+// src/shared/ui/SectionTitle/SectionTitle.module.scss
+
+.wrapper {
+  &--center {
+    text-align: center;
+  }
+
+  &--accent {
+    padding-left: var(--spacing-5);
+    border-left: 4px solid var(--color-accent);
+  }
+
+  &--light .title {
+    color: var(--color-white);
+  }
+
+  &--light .subtitle {
+    color: rgba(255, 255, 255, 0.75);
+  }
+}
+
+.title {
+  font-size: var(--text-4xl);
+  font-weight: 700;
+  color: var(--color-dark);
+  line-height: 1.2;
+
+  @include respond-to('tablet') {
+    font-size: var(--text-3xl);
+  }
+
+  @include respond-to('mobile') {
+    font-size: var(--text-2xl);
+  }
+}
+
+.subtitle {
+  margin-top: var(--spacing-3);
+  font-size: var(--text-lg);
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  max-width: 640px;
+
+  .wrapper--center & {
+    margin-inline: auto;
+  }
+}

@@ -1,0 +1,143 @@
+// src/pages/OrganizationPage/OrganizationPage.module.scss
+
+.page {
+  flex: 1;
+  background: var(--color-bg);
+}
+
+// ── Layout ───────────────────────────────────────────────────────────────────
+
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: calc(100vh - var(--header-height));
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--container-padding);
+  gap: var(--spacing-16);
+  align-items: center;
+  padding-block: var(--spacing-16);
+
+  @include respond-to('tablet') {
+    grid-template-columns: 1fr;
+    min-height: auto;
+    gap: var(--spacing-10);
+  }
+}
+
+// ── Left Column ──────────────────────────────────────────────────────────────
+
+.left {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-6);
+}
+
+.title {
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-weight: 800;
+  text-transform: uppercase;
+  line-height: 1;
+  color: var(--color-white);
+  letter-spacing: -0.02em;
+}
+
+.accent { color: var(--color-accent); }
+
+.description {
+  font-size: var(--text-sm);
+  color: var(--color-text-2);
+  line-height: 1.7;
+  max-width: 360px;
+}
+
+// ── Select ───────────────────────────────────────────────────────────────────
+
+.selectWrap {
+  position: relative;
+  align-self: flex-start;
+
+  :global(.chevron) {
+    position: absolute;
+    right: var(--spacing-4);
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: var(--color-text-2);
+  }
+}
+
+.select {
+  appearance: none;
+  padding: 0.75rem var(--spacing-10) 0.75rem var(--spacing-5);
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border-2);
+  border-radius: var(--radius-md);
+  font-family: var(--font-heading);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text);
+  cursor: pointer;
+  min-width: 240px;
+  transition: border-color var(--transition-fast);
+
+  &:hover { border-color: var(--color-border-3); }
+  @include focus-ring;
+}
+
+// ── Stats ────────────────────────────────────────────────────────────────────
+
+.stats {
+  display: flex;
+  gap: var(--spacing-8);
+  margin-top: var(--spacing-2);
+}
+
+.statItem {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+}
+
+.statValue {
+  font-family: var(--font-heading);
+  font-size: var(--text-3xl);
+  font-weight: 800;
+  color: var(--color-white);
+  line-height: 1;
+}
+
+.statLabel {
+  font-size: var(--text-xs);
+  color: var(--color-text-2);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+// ── Photo Grid ───────────────────────────────────────────────────────────────
+
+.photoGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-3);
+}
+
+.photoWrap {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+}
+
+.photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+
+  .photoWrap:hover & {
+    transform: scale(1.04);
+  }
+}

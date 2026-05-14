@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" preserveAspectRatio="xMidYMid slice">
+  <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%" stop-color="#101e12"/><stop offset="100%" stop-color="#08120a"/>
+  </linearGradient></defs>
+  <rect width="600" height="400" fill="url(#g)"/>
+  <circle cx="500" cy="350" r="260" fill="rgba(62,207,142,0.07)"/>
+  <!-- school / graduation cap -->
+  <polygon points="300,140 380,175 300,210 220,175" fill="#3ecf8e" opacity="0.25" stroke="#3ecf8e" stroke-width="2" stroke-opacity="0.5"/>
+  <rect x="366" y="175" width="8" height="50" rx="4" fill="#3ecf8e" opacity="0.4"/>
+  <ellipse cx="370" cy="228" rx="10" ry="6" fill="#3ecf8e" opacity="0.4"/>
+  <rect x="270" y="218" width="8" height="60" rx="4" fill="#3ecf8e" opacity="0.3"/>
+  <ellipse cx="274" cy="280" rx="30" ry="22" fill="#3ecf8e" opacity="0.15" stroke="#3ecf8e" stroke-width="1.5" stroke-opacity="0.4"/>
+  <rect x="240" y="310" width="120" height="5" rx="2" fill="#3ecf8e" opacity="0.5"/>
+</svg>

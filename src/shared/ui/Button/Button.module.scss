@@ -1,0 +1,101 @@
+// src/shared/ui/Button/Button.module.scss
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-2);
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: var(--text-sm);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border-radius: var(--radius-md);
+  transition: background-color var(--transition-base), color var(--transition-base),
+    border-color var(--transition-base), opacity var(--transition-fast);
+  white-space: nowrap;
+  cursor: pointer;
+  border: 1px solid transparent;
+
+  @include focus-ring;
+
+  &:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
+  &--fullWidth { width: 100%; }
+
+  // ── Sizes ────────────────────────────────────────────────────────────────────
+  &--sm {
+    padding: 0.5rem 1.125rem;
+    font-size: var(--text-xs);
+    height: 34px;
+  }
+  &--md {
+    padding: 0.75rem 1.75rem;
+    height: 46px;
+  }
+  &--lg {
+    padding: 1rem 2.25rem;
+    font-size: var(--text-base);
+    height: 54px;
+  }
+
+  // ── Variants ─────────────────────────────────────────────────────────────────
+  &--primary {
+    background: var(--color-accent);
+    color: var(--color-white);
+    border-color: var(--color-accent);
+
+    &:hover:not(:disabled) {
+      background: var(--color-accent-hover);
+      border-color: var(--color-accent-hover);
+    }
+  }
+
+  &--secondary {
+    background: var(--color-bg-card);
+    color: var(--color-text);
+    border-color: var(--color-border-2);
+
+    &:hover:not(:disabled) {
+      background: var(--color-bg-card-2);
+      border-color: var(--color-border-3);
+    }
+  }
+
+  &--outline {
+    background: transparent;
+    color: var(--color-accent);
+    border-color: var(--color-border-2);
+
+    &:hover:not(:disabled) {
+      border-color: var(--color-accent);
+      background: var(--color-accent-dim);
+    }
+  }
+
+  &--ghost {
+    background: transparent;
+    color: var(--color-text-2);
+    border-color: transparent;
+
+    &:hover:not(:disabled) {
+      color: var(--color-text);
+      background: var(--color-bg-card);
+    }
+  }
+
+  // Light variant for use on light backgrounds (Возможности page)
+  &--outline-dark {
+    background: transparent;
+    color: #1a1a1a;
+    border-color: rgba(0, 0, 0, 0.2);
+
+    &:hover:not(:disabled) {
+      background: rgba(0, 0, 0, 0.06);
+      border-color: rgba(0, 0, 0, 0.35);
+    }
+  }
+}

@@ -1,0 +1,68 @@
+// src/features/ContactForm/ui/ContactForm.module.scss
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-4);
+
+  @include respond-to('mobile') {
+    grid-template-columns: 1fr;
+  }
+}
+
+.input,
+.textarea {
+  width: 100%;
+  padding: var(--spacing-3) var(--spacing-4);
+  background: var(--color-bg-2);
+  border: 1px solid var(--color-border-2);
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--color-text);
+  transition: border-color var(--transition-fast);
+  outline: none;
+
+  &::placeholder { color: var(--color-text-3); }
+
+  &:focus { border-color: var(--color-accent); }
+  &:disabled { opacity: 0.5; cursor: not-allowed; }
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 110px;
+}
+
+.success {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-4);
+  padding: var(--spacing-6);
+  background: rgba(62, 207, 142, 0.1);
+  border: 1px solid rgba(62, 207, 142, 0.25);
+  border-radius: var(--radius-lg);
+}
+
+.successIcon {
+  @include flex-center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  background: var(--color-success);
+  color: var(--color-white);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.successText {
+  font-size: var(--text-sm);
+  color: var(--color-text-2);
+}

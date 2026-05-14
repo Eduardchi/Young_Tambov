@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice">
+  <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%" stop-color="#201010"/><stop offset="100%" stop-color="#140808"/>
+  </linearGradient></defs>
+  <rect width="800" height="500" fill="url(#g)"/>
+  <circle cx="150" cy="400" r="280" fill="rgba(232,80,106,0.07)"/>
+  <circle cx="650" cy="100" r="200" fill="rgba(232,80,106,0.05)"/>
+  <!-- running figure -->
+  <circle cx="400" cy="180" r="32" fill="#e8506a" opacity="0.25"/>
+  <line x1="400" y1="212" x2="400" y2="290" stroke="#e8506a" stroke-width="8" stroke-opacity="0.35" stroke-linecap="round"/>
+  <line x1="400" y1="260" x2="360" y2="310" stroke="#e8506a" stroke-width="8" stroke-opacity="0.3" stroke-linecap="round"/>
+  <line x1="400" y1="260" x2="440" y2="310" stroke="#e8506a" stroke-width="8" stroke-opacity="0.3" stroke-linecap="round"/>
+  <line x1="400" y1="240" x2="350" y2="220" stroke="#e8506a" stroke-width="8" stroke-opacity="0.3" stroke-linecap="round"/>
+  <line x1="400" y1="240" x2="450" y2="215" stroke="#e8506a" stroke-width="8" stroke-opacity="0.35" stroke-linecap="round"/>
+  <!-- track -->
+  <rect x="150" y="350" width="500" height="6" rx="3" fill="#e8506a" opacity="0.25"/>
+  <rect x="150" y="365" width="500" height="6" rx="3" fill="#e8506a" opacity="0.15"/>
+</svg>

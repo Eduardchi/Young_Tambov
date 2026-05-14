@@ -1,0 +1,33 @@
+// src/features/EventsGrid/ui/EventsGrid.module.scss
+
+.grid {
+  display: grid;
+  gap: var(--spacing-6);
+
+  &[data-columns='3'] {
+    grid-template-columns: repeat(3, 1fr);
+
+    @include respond-to('tablet') {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include respond-to('mobile') {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &[data-columns='2'] {
+    grid-template-columns: repeat(2, 1fr);
+
+    @include respond-to('mobile') {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+.empty {
+  text-align: center;
+  color: var(--color-text-secondary);
+  font-size: var(--text-lg);
+  padding: var(--spacing-16) 0;
+}

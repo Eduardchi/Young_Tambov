@@ -1,0 +1,77 @@
+// src/entities/GalleryAlbum/ui/AlbumCard.module.scss
+
+.card {
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  transition: transform var(--transition-base);
+
+  &:hover {
+    transform: translateY(-3px);
+
+    .image { transform: scale(1.04); }
+  }
+}
+
+.link {
+  display: block;
+  position: relative;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+
+  @include focus-ring;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-slow);
+}
+
+.overlay {
+  @include absolute-fill;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.88) 0%,
+    rgba(0, 0, 0, 0.3)  45%,
+    rgba(0, 0, 0, 0.05) 100%
+  );
+}
+
+.content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: var(--spacing-5);
+  gap: var(--spacing-2);
+}
+
+.date {
+  font-family: var(--font-heading);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.title {
+  font-size: var(--text-base);
+  font-weight: 800;
+  color: var(--color-white);
+  line-height: 1.25;
+  text-transform: uppercase;
+  @include truncate-lines(3);
+}
+
+.count {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  font-family: var(--font-heading);
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.55);
+  margin-top: var(--spacing-1);
+}

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice">
+  <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%" stop-color="#102010"/><stop offset="100%" stop-color="#081408"/>
+  </linearGradient></defs>
+  <rect width="800" height="500" fill="url(#g)"/>
+  <circle cx="150" cy="400" r="280" fill="rgba(62,207,142,0.07)"/>
+  <circle cx="650" cy="100" r="200" fill="rgba(62,207,142,0.05)"/>
+  <!-- heart / volunteer icon -->
+  <path d="M400 320 L280 220 Q240 170 280 140 Q320 110 360 140 L400 170 L440 140 Q480 110 520 140 Q560 170 520 220 Z" fill="#3ecf8e" opacity="0.22" stroke="#3ecf8e" stroke-width="2" stroke-opacity="0.5"/>
+  <!-- people around -->
+  <ellipse cx="250" cy="330" rx="22" ry="22" fill="#3ecf8e" opacity="0.2"/>
+  <ellipse cx="550" cy="330" rx="22" ry="22" fill="#3ecf8e" opacity="0.2"/>
+  <ellipse cx="400" cy="370" rx="22" ry="22" fill="#3ecf8e" opacity="0.2"/>
+  <line x1="272" y1="330" x2="378" y2="350" stroke="#3ecf8e" stroke-width="2" stroke-opacity="0.25"/>
+  <line x1="528" y1="330" x2="422" y2="350" stroke="#3ecf8e" stroke-width="2" stroke-opacity="0.25"/>
+</svg>

@@ -1,0 +1,130 @@
+// src/pages/OpportunitiesPage/OpportunitiesPage.module.scss
+
+.page {
+  flex: 1;
+  background: var(--color-bg);
+  padding: var(--spacing-16) 0 var(--spacing-20);
+}
+
+.inner {
+  max-width: 720px;
+  margin-inline: auto;
+  padding-inline: var(--container-padding);
+}
+
+// ── Header ───────────────────────────────────────────────────────────────────
+
+.header {
+  margin-bottom: var(--spacing-12);
+}
+
+.title {
+  font-size: clamp(3rem, 7vw, 5rem);
+  font-weight: 800;
+  text-transform: uppercase;
+  line-height: 1;
+  color: var(--color-white);
+  letter-spacing: -0.02em;
+}
+
+.accent { color: var(--color-accent); }
+
+.subtitle {
+  margin-top: var(--spacing-4);
+  font-size: var(--text-sm);
+  color: var(--color-text-2);
+  line-height: 1.7;
+}
+
+// ── Sections ─────────────────────────────────────────────────────────────────
+
+.sections {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-5);
+}
+
+.section {
+  border: 1px solid var(--color-border-2);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-6) var(--spacing-7);
+  background: var(--color-bg-card);
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--spacing-4);
+}
+
+.sectionTitle {
+  font-size: var(--text-xl);
+  font-weight: 800;
+  color: var(--color-white);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.sectionDesc {
+  margin-top: var(--spacing-3);
+  font-size: var(--text-sm);
+  color: var(--color-text-2);
+  line-height: 1.6;
+  max-width: 480px;
+}
+
+.toggle {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-border-2);
+  background: var(--color-bg-card-2);
+  color: var(--color-text-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color var(--transition-fast), color var(--transition-fast);
+  margin-top: 2px;
+
+  &:hover {
+    border-color: var(--color-border-3);
+    color: var(--color-text);
+  }
+
+  @include focus-ring;
+}
+
+// ── Item Grid ────────────────────────────────────────────────────────────────
+
+.itemGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-3);
+  margin-top: var(--spacing-6);
+
+  @include respond-to('mobile') { grid-template-columns: 1fr; }
+}
+
+.item {
+  width: 100%;
+  padding: var(--spacing-3) var(--spacing-4);
+  background: var(--color-bg-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--color-text);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color var(--transition-fast), background var(--transition-fast);
+
+  &:hover {
+    border-color: var(--color-border-2);
+    background: var(--color-bg-card-2);
+  }
+
+  @include focus-ring;
+}

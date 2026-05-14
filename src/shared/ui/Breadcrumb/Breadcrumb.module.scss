@@ -1,0 +1,33 @@
+// src/shared/ui/Breadcrumb/Breadcrumb.module.scss
+
+.list {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--spacing-2);
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  font-size: var(--text-sm);
+}
+
+.link {
+  color: var(--color-text-secondary);
+  transition: color var(--transition-fast);
+
+  &:hover {
+    color: var(--color-primary);
+  }
+}
+
+.separator {
+  color: var(--color-text-muted);
+}
+
+.current {
+  color: var(--color-text);
+  font-weight: 500;
+}
