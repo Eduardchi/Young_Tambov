@@ -27,7 +27,7 @@ export function Header() {
       <header className={clsx(styles.header, { [styles['header--scrolled']]: isScrolled })}>
         <div className={styles.inner}>
           <Link to="/" className={styles.logo} aria-label="Тамбов Молодой — на главную">
-            <img src="/logo.png" alt="" className={styles.logoMark} aria-hidden="true" />
+            <img src={`${import.meta.env.BASE_URL}logo.png`} alt="" className={styles.logoMark} aria-hidden="true" />
             <div className={styles.logoText}>
               <span className={styles.logoTitle}>Тамбов</span>
               <span className={styles.logoSub}>молодой</span>
