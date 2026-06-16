@@ -7,9 +7,37 @@ import styles from './NewsCard.module.scss';
 
 interface NewsCardProps {
   item: NewsItem;
+  variant?: 'list' | 'grid';
 }
 
-export function NewsCard({ item }: NewsCardProps) {
+export function NewsCard({ item, variant = 'list' }: NewsCardProps) {
+  if (variant === 'grid') {
+    return (
+      <article className={styles.cardGrid}>
+        <Link
+          to={`/news/${item.id}`}
+          className={styles.imageWrapGrid}
+          aria-label={item.title}
+          tabIndex={-1}
+        >
+          <Img src={item.imageUrl} alt="" className={styles.image} loading="lazy" />
+          <span className={styles.categoryBadge}>{item.category}</span>
+        </Link>
+        <div className={styles.contentGrid}>
+          <time dateTime={item.date} className={styles.date}>
+            {formatDateShort(item.date).toUpperCase()}
+          </time>
+          <h3 className={styles.titleGrid}>
+            <Link to={`/news/${item.id}`} className={styles.titleLink}>
+              {item.title}
+            </Link>
+          </h3>
+          <p className={styles.descGrid}>{item.description}</p>
+        </div>
+      </article>
+    );
+  }
+
   return (
     <article className={styles.card}>
       <Link to={`/news/${item.id}`} className={styles.imageWrap} aria-label={item.title} tabIndex={-1}>

@@ -24,6 +24,18 @@ const ContactsPage = lazy(() =>
 const GalleryPage = lazy(() =>
   import('@pages/GalleryPage').then((m) => ({ default: m.GalleryPage })),
 );
+const NewsPage = lazy(() =>
+  import('@pages/NewsPage').then((m) => ({ default: m.NewsPage })),
+);
+const NewsDetailPage = lazy(() =>
+  import('@pages/NewsDetailPage').then((m) => ({ default: m.NewsDetailPage })),
+);
+const EventDetailPage = lazy(() =>
+  import('@pages/EventDetailPage').then((m) => ({ default: m.EventDetailPage })),
+);
+const GalleryAlbumPage = lazy(() =>
+  import('@pages/GalleryAlbumPage').then((m) => ({ default: m.GalleryAlbumPage })),
+);
 
 function PageLoader() {
   return (
@@ -57,12 +69,16 @@ export const router = createBrowserRouter(
       element: <App />,
       children: [
         { index: true, element: withSuspense(HomePage) },
+        { path: 'news', element: withSuspense(NewsPage) },
+        { path: 'news/:id', element: withSuspense(NewsDetailPage) },
         { path: 'events', element: withSuspense(EventsPage) },
+        { path: 'events/:id', element: withSuspense(EventDetailPage) },
         { path: 'support', element: withSuspense(SupportPage) },
         { path: 'opportunities', element: withSuspense(OpportunitiesPage) },
         { path: 'organization', element: withSuspense(OrganizationPage) },
         { path: 'contacts', element: withSuspense(ContactsPage) },
         { path: 'gallery', element: withSuspense(GalleryPage) },
+        { path: 'gallery/:id', element: withSuspense(GalleryAlbumPage) },
       ],
     },
   ],

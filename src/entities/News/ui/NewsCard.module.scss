@@ -1,38 +1,12 @@
 // src/entities/News/ui/NewsCard.module.scss
 
-.card {
-  display: grid;
-  grid-template-columns: 80px 1fr;
-  gap: var(--spacing-4);
-  padding: var(--spacing-5) 0;
-  border-bottom: 1px solid var(--color-border);
-
-  &:first-child { padding-top: 0; }
-  &:last-child  { border-bottom: none; padding-bottom: 0; }
-}
-
-.imageWrap {
-  display: block;
-  width: 80px;
-  height: 80px;
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  flex-shrink: 0;
-}
+// ── Shared ────────────────────────────────────────────────────────────────────
 
 .image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform var(--transition-base);
-
-  .card:hover & { transform: scale(1.06); }
-}
-
-.content {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-2);
+  transition: transform var(--transition-slow);
 }
 
 .date {
@@ -40,15 +14,7 @@
   font-size: 0.6rem;
   font-weight: 700;
   letter-spacing: 0.1em;
-  color: var(--color-pink);
-}
-
-.title {
-  font-size: var(--text-sm);
-  font-weight: 800;
-  line-height: 1.35;
-  text-transform: uppercase;
-  @include truncate-lines(2);
+  color: var(--color-accent);
 }
 
 .titleLink {
@@ -59,10 +25,118 @@
   @include focus-ring;
 }
 
+// ── List variant (compact horizontal card) ────────────────────────────────────
+
+.card {
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  gap: var(--spacing-5);
+  padding: var(--spacing-6) 0;
+  border-bottom: 1px solid var(--color-border);
+
+  &:first-child { padding-top: 0; }
+  &:last-child  { border-bottom: none; padding-bottom: 0; }
+
+  &:hover .image { transform: scale(1.06); }
+}
+
+.imageWrap {
+  display: block;
+  width: 96px;
+  height: 96px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+  padding-top: var(--spacing-1);
+}
+
+.title {
+  font-size: var(--text-sm);
+  font-weight: 800;
+  line-height: 1.35;
+  text-transform: uppercase;
+  @include truncate-lines(2);
+}
+
 .desc {
   font-size: var(--text-xs);
   color: var(--color-text-2);
-  line-height: 1.5;
-  @include truncate-lines(2);
+  line-height: 1.6;
+  @include truncate-lines(3);
   text-transform: none;
+}
+
+// ── Grid variant (vertical card) ─────────────────────────────────────────────
+
+.cardGrid {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  transition: border-color var(--transition-fast), transform var(--transition-fast);
+
+  &:hover {
+    border-color: var(--color-accent);
+    transform: translateY(-3px);
+
+    .image { transform: scale(1.04); }
+  }
+}
+
+.imageWrapGrid {
+  display: block;
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.categoryBadge {
+  position: absolute;
+  bottom: var(--spacing-3);
+  left: var(--spacing-3);
+  padding: 0.25em 0.75em;
+  background: var(--color-accent);
+  color: var(--color-white);
+  font-family: var(--font-heading);
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: var(--radius-full);
+}
+
+.contentGrid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+  padding: var(--spacing-5) var(--spacing-6) var(--spacing-6);
+  flex: 1;
+}
+
+.titleGrid {
+  font-size: var(--text-base);
+  font-weight: 800;
+  line-height: 1.35;
+  text-transform: uppercase;
+  flex: 1;
+  @include truncate-lines(3);
+}
+
+.descGrid {
+  font-size: var(--text-xs);
+  color: var(--color-text-2);
+  line-height: 1.65;
+  @include truncate-lines(3);
+  text-transform: none;
+  margin-top: var(--spacing-1);
 }

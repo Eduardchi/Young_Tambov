@@ -1,0 +1,242 @@
+// src/pages/GalleryAlbumPage/GalleryAlbumPage.module.scss
+
+.page {
+  flex: 1;
+  background: var(--color-bg);
+}
+
+// ── Header ───────────────────────────────────────────────────────────────────
+
+.header {
+  background: var(--color-bg-card);
+  border-bottom: 1px solid var(--color-border);
+  padding: var(--spacing-12) 0 var(--spacing-10);
+}
+
+.headerInner {
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--container-padding);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+}
+
+.backBtn {
+  display: inline-flex;
+  align-self: flex-start;
+  background: transparent;
+  border: 1px solid var(--color-border-2);
+  color: var(--color-text-3);
+  font-family: var(--font-heading);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.4rem 1rem;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: border-color var(--transition-fast), color var(--transition-fast);
+  margin-bottom: var(--spacing-2);
+
+  &:hover { border-color: var(--color-accent); color: var(--color-accent); }
+}
+
+.date {
+  font-family: var(--font-heading);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.title {
+  font-size: clamp(1.5rem, 5vw, 3rem);
+  font-weight: 800;
+  text-transform: uppercase;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--color-white);
+}
+
+.count {
+  font-family: var(--font-heading);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-3);
+}
+
+// ── Photo grid ───────────────────────────────────────────────────────────────
+
+.inner {
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding: var(--spacing-12) var(--container-padding) var(--spacing-20);
+}
+
+.grid {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--spacing-3);
+  margin-bottom: var(--spacing-10);
+
+  @include respond-to('tablet') { grid-template-columns: repeat(3, 1fr); }
+  @include respond-to('mobile') { grid-template-columns: repeat(2, 1fr); }
+}
+
+.photoItem {
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+}
+
+.photoLink {
+  display: block;
+  width: 100%;
+  height: 100%;
+  transition: transform var(--transition-base);
+
+  &:hover {
+    .photo { transform: scale(1.06); }
+    .caption { opacity: 1; }
+  }
+
+  @include focus-ring;
+}
+
+.photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-slow);
+}
+
+.caption {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  padding: var(--spacing-3) var(--spacing-3) var(--spacing-4);
+  background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 100%);
+  font-size: 0.6rem;
+  color: rgba(255,255,255,0.85);
+  line-height: 1.3;
+  opacity: 0;
+  transition: opacity var(--transition-base);
+}
+
+// ── External (Yandex Disk) album ─────────────────────────────────────────────
+
+.backLinkBtn {
+  display: inline-flex;
+  align-self: flex-start;
+  background: transparent;
+  border: 1px solid var(--color-border-2);
+  color: var(--color-text-3);
+  font-family: var(--font-heading);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.4rem 1rem;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: border-color var(--transition-fast), color var(--transition-fast);
+  margin-bottom: var(--spacing-8);
+
+  &:hover { border-color: var(--color-accent); color: var(--color-accent); }
+}
+
+.externalCard {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-12);
+  align-items: center;
+
+  @include respond-to('tablet') {
+    grid-template-columns: 1fr;
+  }
+}
+
+.externalCover {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+}
+
+.externalImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.externalOverlay {
+  @include absolute-fill;
+  background: linear-gradient(
+    135deg,
+    rgba(75, 108, 247, 0.15) 0%,
+    rgba(0, 0, 0, 0.1) 100%
+  );
+}
+
+.externalBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+}
+
+.externalNote {
+  font-size: var(--text-sm);
+  color: var(--color-text-3);
+  line-height: 1.6;
+}
+
+.diskBtn {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  padding: 0.75rem 2rem;
+  background: var(--color-accent);
+  color: var(--color-white);
+  border-radius: var(--radius-md);
+  font-family: var(--font-heading);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: opacity var(--transition-fast), transform var(--transition-fast);
+  margin-top: var(--spacing-2);
+
+  &:hover { opacity: 0.88; transform: translateY(-1px); }
+  @include focus-ring;
+}
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  font-family: var(--font-heading);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--color-text-3);
+  transition: color var(--transition-fast);
+  margin-top: var(--spacing-8);
+
+  &:hover { color: var(--color-accent); }
+}
+
+.status {
+  padding: var(--spacing-16) 0;
+  text-align: center;
+  color: var(--color-text-3);
+  font-size: var(--text-sm);
+}

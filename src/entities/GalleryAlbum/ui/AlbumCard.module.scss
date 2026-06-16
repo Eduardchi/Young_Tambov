@@ -75,3 +75,14 @@
   color: rgba(255, 255, 255, 0.55);
   margin-top: var(--spacing-1);
 }
+
+.diskLabel {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  font-family: var(--font-heading);
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.7);
+  margin-top: var(--spacing-1);
+}

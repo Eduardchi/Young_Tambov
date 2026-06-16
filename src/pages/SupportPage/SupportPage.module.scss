@@ -65,6 +65,122 @@
   text-transform: uppercase;
 }
 
+// ── Age group selector ────────────────────────────────────────────────────────
+
+.ageBar {
+  background: var(--color-bg-card);
+  border-bottom: 1px solid var(--color-border);
+  padding: var(--spacing-8) 0;
+}
+
+.ageBarInner {
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--container-padding);
+}
+
+.ageBarLabel {
+  font-family: var(--font-heading);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-2);
+  margin-bottom: var(--spacing-4);
+}
+
+.ageCards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--spacing-3);
+
+  @include respond-to('tablet') {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include respond-to('mobile') {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.ageCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  padding: var(--spacing-5) var(--spacing-5);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border-2);
+  border-radius: var(--radius-xl);
+  cursor: pointer;
+  text-align: left;
+  transition: border-color var(--transition-fast), background var(--transition-fast),
+              transform var(--transition-fast);
+  overflow: hidden;
+
+  &:hover {
+    border-color: var(--color-border-3);
+    transform: translateY(-2px);
+  }
+
+  &[data-active='true'] {
+    background: var(--color-accent-dim);
+    border-color: var(--color-accent);
+
+    .ageRange { color: var(--color-accent); }
+    .ageLabel { color: var(--color-white); }
+  }
+
+  @include focus-ring;
+}
+
+.ageRange {
+  font-family: var(--font-heading);
+  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+  font-weight: 800;
+  color: var(--color-text-2);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  transition: color var(--transition-fast);
+}
+
+.ageLabel {
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-text);
+  margin-top: var(--spacing-1);
+  transition: color var(--transition-fast);
+}
+
+.ageSub {
+  font-size: 0.7rem;
+  color: var(--color-text-3);
+}
+
+.ageCount {
+  position: absolute;
+  top: var(--spacing-3);
+  right: var(--spacing-4);
+  font-family: var(--font-heading);
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: var(--color-text-3);
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  padding: 0.1em 0.5em;
+
+  [data-active='true'] & {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+    color: var(--color-white);
+  }
+}
+
 // ── Filter Bar ───────────────────────────────────────────────────────────────
 
 .filterBar {

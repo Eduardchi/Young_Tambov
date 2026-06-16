@@ -1,13 +1,15 @@
 // src/features/ContactForm/model/useContactForm.ts
 import { useState, type ChangeEvent, type FormEvent } from 'react';
 import type { ContactFormData } from '@shared/types';
+import { contactsApi } from '@shared/api/contacts.api';
 
 type FormStatus = 'idle' | 'loading' | 'success' | 'error';
 
-const INITIAL: ContactFormData = { name: '', email: '', message: '' };
+const INITIAL: ContactFormData = { name: '', phone: '', message: '' };
 
 export function useContactForm() {
   const [values, setValues] = useState<ContactFormData>(INITIAL);
+  const [consent, setConsent] = useState(false);
   const [status, setStatus] = useState<FormStatus>('idle');
 
   function handleChange(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
@@ -15,13 +17,23 @@ export function useContactForm() {
     setValues((prev) => ({ ...prev, [name]: value }));
   }
 
-  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    setStatus('loading');
-    // Simulate API call
-    await new Promise((res) => setTimeout(res, 800));
-    setStatus('success');
+  function handleConsent(e: ChangeEvent<HTMLInputElement>) {
+    setConsent(e.target.checked);
   }
 
-  return { values, status, handleChange, handleSubmit };
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    if (!consent) return;
+    setStatus('loading');
+    try {
+      await contactsApi.send(values);
+      setStatus('success');
+      setValues(INITIAL);
+      setConsent(false);
+    } catch {
+      setStatus('error');
+    }
+  }
+
+  return { values, consent, status, handleChange, handleConsent, handleSubmit };
 }

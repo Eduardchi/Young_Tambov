@@ -6,16 +6,6 @@
   gap: var(--spacing-4);
 }
 
-.row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--spacing-4);
-
-  @include respond-to('mobile') {
-    grid-template-columns: 1fr;
-  }
-}
-
 .input,
 .textarea {
   width: 100%;
@@ -65,4 +55,42 @@
 .successText {
   font-size: var(--text-sm);
   color: var(--color-text-2);
+}
+
+.error {
+  font-size: var(--text-sm);
+  color: var(--color-error, #e5484d);
+}
+
+// ── Consent ───────────────────────────────────────────────────────────────────
+
+.consentLabel {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-3);
+  cursor: pointer;
+}
+
+.consentCheckbox {
+  width: 16px;
+  height: 16px;
+  margin-top: 2px;
+  flex-shrink: 0;
+  accent-color: var(--color-accent);
+  cursor: pointer;
+}
+
+.consentText {
+  font-size: var(--text-xs);
+  color: var(--color-text-3);
+  line-height: 1.5;
+}
+
+.consentLink {
+  color: var(--color-text-2);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color var(--transition-fast);
+
+  &:hover { color: var(--color-accent); }
 }

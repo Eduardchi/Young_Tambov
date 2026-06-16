@@ -1,0 +1,805 @@
+openapi: 3.1.0
+
+info:
+  title: Тамбов Молодой — Backend API
+  version: 1.0.0
+  description: |
+    REST API для портала молодёжной политики Тамбовской области.
+
+    ## Базовый URL
+    `VITE_API_URL` во фронтенде указывает на корень API.
+    Рекомендуется: `https://<host>/api/v1` — тогда в `.env` прописывается
+    `VITE_API_URL=https://<host>/api/v1`.
+
+    ## Форматы
+    - Все даты: ISO 8601 `YYYY-MM-DD` (строка).
+    - Изображения: абсолютный URL (`https://...`) или относительный путь от корня сервера.
+    - `null` у `deadline` означает «программа действует постоянно» (без дедлайна).
+
+    ## Пагинация
+    Все списочные endpoints принимают `limit` / `offset` и возвращают конверт:
+    ```json
+    { "data": [...], "meta": { "total": 42, "offset": 0, "limit": 20 } }
+    ```
+
+    ## Ошибки
+    Все ошибки возвращаются в виде:
+    ```json
+    { "error": { "code": "NOT_FOUND", "message": "..." } }
+    ```
+
+  contact:
+    name: ТОГБУ «Дирекция молодёжных программ»
+    email: togbu_dmto@mail.ru
+
+servers:
+  - url: /api/v1
+    description: Локальная разработка / Production
+
+tags:
+  - name: events
+    description: Мероприятия
+  - name: news
+    description: Новости
+  - name: support
+    description: Программы поддержки молодёжи
+  - name: gallery
+    description: Фотогалерея
+  - name: contacts
+    description: Форма обратной связи
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# PATHS
+# ═══════════════════════════════════════════════════════════════════════════════
+
+paths:
+
+  # ── Events ──────────────────────────────────────────────────────────────────
+
+  /events:
+    get:
+      tags: [events]
+      summary: Список мероприятий
+      operationId: listEvents
+      parameters:
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Offset'
+        - name: category
+          in: query
+          description: Фильтр по категории
+          schema:
+            $ref: '#/components/schemas/EventCategory'
+        - name: city
+          in: query
+          description: Фильтр по городу (точное совпадение поля `location`)
+          schema:
+            $ref: '#/components/schemas/City'
+        - name: search
+          in: query
+          description: Полнотекстовый поиск по `title` и `location` (case-insensitive)
+          schema:
+            type: string
+            minLength: 2
+            maxLength: 100
+            example: хакатон
+        - name: date_from
+          in: query
+          description: Начало диапазона дат включительно
+          schema:
+            type: string
+            format: date
+            example: '2025-04-01'
+        - name: date_to
+          in: query
+          description: Конец диапазона дат включительно
+          schema:
+            type: string
+            format: date
+            example: '2025-06-30'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data, meta]
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Event'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+              example:
+                data:
+                  - id: evt-001
+                    title: Областной фестиваль студенческого творчества
+                    date: '2025-04-12'
+                    location: Тамбов
+                    category: Культура
+                    imageUrl: 'https://example.com/images/evt-001.jpg'
+                    description: Ежегодный областной конкурс среди студентов.
+                meta:
+                  total: 17
+                  offset: 0
+                  limit: 20
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  /events/{id}:
+    get:
+      tags: [events]
+      summary: Одно мероприятие
+      operationId: getEvent
+      parameters:
+        - $ref: '#/components/parameters/PathId'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data]
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Event'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  # ── News ────────────────────────────────────────────────────────────────────
+
+  /news:
+    get:
+      tags: [news]
+      summary: Список новостей
+      operationId: listNews
+      parameters:
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Offset'
+        - name: category
+          in: query
+          description: Фильтр по категории
+          schema:
+            $ref: '#/components/schemas/NewsCategory'
+        - name: search
+          in: query
+          description: Полнотекстовый поиск по `title`
+          schema:
+            type: string
+            minLength: 2
+            maxLength: 100
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data, meta]
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/NewsItem'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+              example:
+                data:
+                  - id: news-001
+                    title: Старт грантового конкурса «Молодёж 68»
+                    date: '2025-04-05'
+                    category: Гранты
+                    description: Принимаются заявки от молодых предпринимателей и НКО.
+                    imageUrl: 'https://example.com/images/news-001.jpg'
+                meta:
+                  total: 3
+                  offset: 0
+                  limit: 20
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  /news/{id}:
+    get:
+      tags: [news]
+      summary: Одна новость
+      operationId: getNewsItem
+      parameters:
+        - $ref: '#/components/parameters/PathId'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data]
+                properties:
+                  data:
+                    $ref: '#/components/schemas/NewsItem'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  # ── Support Programs ─────────────────────────────────────────────────────────
+
+  /support:
+    get:
+      tags: [support]
+      summary: Список программ поддержки молодёжи
+      operationId: listSupportPrograms
+      parameters:
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Offset'
+        - name: category
+          in: query
+          description: Фильтр по категории программы
+          schema:
+            $ref: '#/components/schemas/SupportCategory'
+        - name: search
+          in: query
+          description: Полнотекстовый поиск по `title`
+          schema:
+            type: string
+            minLength: 2
+            maxLength: 100
+        - name: active_only
+          in: query
+          description: |
+            `true` — вернуть только актуальные программы:
+            у которых `deadline` ≥ сегодня, либо `deadline = null` (бессрочные).
+          schema:
+            type: boolean
+            default: false
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data, meta]
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/SupportProgram'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+              example:
+                data:
+                  - id: sup-001
+                    title: Гранты для молодых учёных
+                    category: Гранты
+                    audience: Аспирантам и молодым учёным до 35 лет
+                    deadline: '2025-05-01'
+                    description: Областной конкурс грантов для поддержки молодых исследователей.
+                    imageUrl: 'https://example.com/images/sup-001.jpg'
+                  - id: sup-002
+                    title: Программа «Земский учитель»
+                    category: Трудоустройство
+                    audience: Прямо сейчас
+                    deadline: null
+                    description: Единовременная выплата 1 млн руб. при трудоустройстве в сельской школе.
+                    imageUrl: 'https://example.com/images/sup-002.jpg'
+                meta:
+                  total: 4
+                  offset: 0
+                  limit: 20
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  /support/{id}:
+    get:
+      tags: [support]
+      summary: Одна программа поддержки
+      operationId: getSupportProgram
+      parameters:
+        - $ref: '#/components/parameters/PathId'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data]
+                properties:
+                  data:
+                    $ref: '#/components/schemas/SupportProgram'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  # ── Gallery ──────────────────────────────────────────────────────────────────
+
+  /gallery:
+    get:
+      tags: [gallery]
+      summary: Список фотоальбомов
+      operationId: listAlbums
+      parameters:
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Offset'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data, meta]
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/GalleryAlbum'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+              example:
+                data:
+                  - id: album-001
+                    title: Областной фестиваль студенческого творчества
+                    date: '2025-04-12'
+                    photoCount: 42
+                    coverUrl: 'https://example.com/gallery/album-001/cover.jpg'
+                meta:
+                  total: 4
+                  offset: 0
+                  limit: 20
+
+  /gallery/{id}:
+    get:
+      tags: [gallery]
+      summary: Альбом с полным списком фотографий
+      operationId: getAlbum
+      parameters:
+        - $ref: '#/components/parameters/PathId'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data]
+                properties:
+                  data:
+                    $ref: '#/components/schemas/GalleryAlbumDetail'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  # ── Contacts ─────────────────────────────────────────────────────────────────
+
+  /contacts:
+    post:
+      tags: [contacts]
+      summary: Отправить обращение через форму обратной связи
+      operationId: sendContactForm
+      description: |
+        Принимает обращение пользователя и сохраняет его (например, в БД и/или
+        пересылает письмом на `togbu_dmto@mail.ru`).
+
+        Рекомендуется ограничить rate limit: не более 5 запросов в минуту
+        с одного IP.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContactFormRequest'
+            example:
+              name: Иван Петров
+              email: ivan@example.com
+              message: Хочу узнать подробнее о грантовой программе для молодых учёных.
+      responses:
+        '200':
+          description: Обращение принято
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [success]
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    description: Текст для отображения пользователю
+                    example: Запрос отправлен. Мы свяжемся с вами в ближайшее время.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# COMPONENTS
+# ═══════════════════════════════════════════════════════════════════════════════
+
+components:
+
+  # ── Parameters ───────────────────────────────────────────────────────────────
+
+  parameters:
+    PathId:
+      name: id
+      in: path
+      required: true
+      description: Идентификатор ресурса
+      schema:
+        type: string
+        example: evt-001
+
+    Limit:
+      name: limit
+      in: query
+      description: Количество записей на страницу
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 20
+
+    Offset:
+      name: offset
+      in: query
+      description: Смещение от начала выборки
+      schema:
+        type: integer
+        minimum: 0
+        default: 0
+
+  # ── Schemas ───────────────────────────────────────────────────────────────────
+
+  schemas:
+
+    # ── Enums ──────────────────────────────────────────────────────────────────
+
+    EventCategory:
+      type: string
+      description: Категория мероприятия
+      enum:
+        - Культура
+        - Спорт
+        - Наука
+        - Волонтёрство
+        - IT
+        - Образование
+
+    NewsCategory:
+      type: string
+      description: Категория новости
+      enum:
+        - Гранты
+        - Волонтёрство
+        - Образование
+
+    SupportCategory:
+      type: string
+      description: Категория программы поддержки
+      enum:
+        - Гранты
+        - Стипендии
+        - Жильё
+        - Трудоустройство
+        - Обучение
+
+    City:
+      type: string
+      description: Город Тамбовской области
+      enum:
+        - Тамбов
+        - Мичуринск
+        - Моршанск
+        - Рассказово
+        - Уварово
+        - Котовск
+        - Кирсанов
+        - Жердевка
+        - Ржакса
+        - Инжавино
+        - Первомайский
+        - Мордово
+
+    # ── Core entities ──────────────────────────────────────────────────────────
+
+    Event:
+      type: object
+      required: [id, title, date, location, category, imageUrl, description]
+      properties:
+        id:
+          type: string
+          description: Уникальный идентификатор
+          example: evt-001
+        title:
+          type: string
+          maxLength: 200
+          description: Название мероприятия
+          example: Областной фестиваль студенческого творчества
+        date:
+          type: string
+          format: date
+          description: Дата проведения
+          example: '2025-04-12'
+        location:
+          $ref: '#/components/schemas/City'
+        category:
+          $ref: '#/components/schemas/EventCategory'
+        imageUrl:
+          type: string
+          format: uri
+          description: URL обложки мероприятия
+          example: 'https://example.com/images/evt-001.jpg'
+        description:
+          type: string
+          maxLength: 1000
+          description: Краткое описание мероприятия
+          example: Ежегодный конкурс среди студентов Тамбовской области.
+
+    NewsItem:
+      type: object
+      required: [id, title, date, category, description, imageUrl]
+      properties:
+        id:
+          type: string
+          example: news-001
+        title:
+          type: string
+          maxLength: 200
+          example: Старт грантового конкурса «Молодёж 68»
+        date:
+          type: string
+          format: date
+          example: '2025-04-05'
+        category:
+          $ref: '#/components/schemas/NewsCategory'
+        description:
+          type: string
+          maxLength: 1000
+          example: Принимаются заявки от молодых предпринимателей и НКО.
+        imageUrl:
+          type: string
+          format: uri
+          example: 'https://example.com/images/news-001.jpg'
+
+    SupportProgram:
+      type: object
+      required: [id, title, category, audience, deadline, description, imageUrl]
+      properties:
+        id:
+          type: string
+          example: sup-001
+        title:
+          type: string
+          maxLength: 200
+          example: Гранты для молодых учёных
+        category:
+          $ref: '#/components/schemas/SupportCategory'
+        audience:
+          type: string
+          maxLength: 200
+          description: Целевая аудитория программы (свободный текст)
+          example: Аспирантам и молодым учёным до 35 лет
+        deadline:
+          type: string
+          format: date
+          nullable: true
+          description: |
+            Дата окончания приёма заявок.
+            `null` означает, что программа действует постоянно (без дедлайна).
+          example: '2025-05-01'
+        description:
+          type: string
+          maxLength: 1000
+          example: Областной конкурс грантов для поддержки молодых исследователей.
+        imageUrl:
+          type: string
+          format: uri
+          example: 'https://example.com/images/sup-001.jpg'
+
+    GalleryAlbum:
+      type: object
+      required: [id, title, date, photoCount, coverUrl]
+      properties:
+        id:
+          type: string
+          example: album-001
+        title:
+          type: string
+          maxLength: 200
+          example: Областной фестиваль студенческого творчества
+        date:
+          type: string
+          format: date
+          example: '2025-04-12'
+        photoCount:
+          type: integer
+          minimum: 0
+          description: Общее количество фотографий в альбоме
+          example: 42
+        coverUrl:
+          type: string
+          format: uri
+          description: URL фотографии-обложки альбома
+          example: 'https://example.com/gallery/album-001/cover.jpg'
+
+    GalleryAlbumDetail:
+      description: Альбом с полным списком фотографий
+      allOf:
+        - $ref: '#/components/schemas/GalleryAlbum'
+        - type: object
+          required: [photos]
+          properties:
+            photos:
+              type: array
+              description: Все фотографии альбома
+              items:
+                $ref: '#/components/schemas/Photo'
+
+    Photo:
+      type: object
+      required: [id, url]
+      properties:
+        id:
+          type: string
+          example: photo-001
+        url:
+          type: string
+          format: uri
+          example: 'https://example.com/gallery/album-001/photo-001.jpg'
+        caption:
+          type: string
+          nullable: true
+          maxLength: 200
+          description: Подпись к фотографии
+          example: Выступление ансамбля «Тамбовчане»
+
+    ContactFormRequest:
+      type: object
+      required: [name, email, message]
+      properties:
+        name:
+          type: string
+          minLength: 2
+          maxLength: 100
+          description: Имя отправителя
+          example: Иван Петров
+        email:
+          type: string
+          format: email
+          description: Email для обратной связи
+          example: ivan@example.com
+        message:
+          type: string
+          minLength: 10
+          maxLength: 2000
+          description: Текст обращения
+          example: Хочу узнать подробнее о грантовой программе для молодых учёных.
+
+    # ── Pagination ──────────────────────────────────────────────────────────────
+
+    PaginationMeta:
+      type: object
+      required: [total, offset, limit]
+      description: Метаданные пагинации
+      properties:
+        total:
+          type: integer
+          description: Общее количество записей, удовлетворяющих фильтрам (без пагинации)
+          example: 17
+        offset:
+          type: integer
+          description: Текущее смещение
+          example: 0
+        limit:
+          type: integer
+          description: Максимальное количество записей в текущем ответе
+          example: 20
+
+    # ── Errors ──────────────────────────────────────────────────────────────────
+
+    ErrorResponse:
+      type: object
+      required: [error]
+      properties:
+        error:
+          type: object
+          required: [code, message]
+          properties:
+            code:
+              type: string
+              description: Машиночитаемый код ошибки
+              example: NOT_FOUND
+            message:
+              type: string
+              description: Человекочитаемое описание
+              example: Event with id 'evt-999' not found
+
+    ValidationErrorResponse:
+      type: object
+      required: [error]
+      properties:
+        error:
+          type: object
+          required: [code, message, fields]
+          properties:
+            code:
+              type: string
+              example: VALIDATION_ERROR
+            message:
+              type: string
+              example: Request validation failed
+            fields:
+              type: array
+              description: Список полей, не прошедших валидацию
+              items:
+                type: object
+                required: [field, message]
+                properties:
+                  field:
+                    type: string
+                    example: email
+                  message:
+                    type: string
+                    example: Некорректный формат email
+
+  # ── Responses ─────────────────────────────────────────────────────────────────
+
+  responses:
+
+    BadRequest:
+      description: Некорректный запрос (неверный параметр, неверный формат)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error:
+              code: BAD_REQUEST
+              message: 'Invalid query parameter value: category'
+
+    NotFound:
+      description: Ресурс не найден
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error:
+              code: NOT_FOUND
+              message: Resource not found
+
+    ValidationError:
+      description: Ошибка валидации тела запроса (422)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ValidationErrorResponse'
+          example:
+            error:
+              code: VALIDATION_ERROR
+              message: Request validation failed
+              fields:
+                - field: email
+                  message: Некорректный формат email
+                - field: message
+                  message: Сообщение слишком короткое (минимум 10 символов)
+
+    TooManyRequests:
+      description: Превышен лимит запросов
+      headers:
+        Retry-After:
+          description: Через сколько секунд можно повторить запрос
+          schema:
+            type: integer
+            example: 60
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error:
+              code: RATE_LIMIT_EXCEEDED
+              message: Too many requests. Please try again later.

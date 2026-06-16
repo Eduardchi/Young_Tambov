@@ -18,8 +18,14 @@ const CATEGORY_COLORS: Record<EventCategory, string> = {
   Образование:  '#1abc9c',
 };
 
+const CATEGORY_LABELS: Partial<Record<EventCategory, string>> = {
+  Культура:     'Творчество и культура',
+  Волонтёрство: 'Добровольчество',
+};
+
 export function EventCard({ event }: EventCardProps) {
   const color = CATEGORY_COLORS[event.category] ?? '#4b6cf7';
+  const categoryLabel = CATEGORY_LABELS[event.category] ?? event.category;
 
   return (
     <article className={styles.card}>
@@ -30,7 +36,7 @@ export function EventCard({ event }: EventCardProps) {
           {formatDateShort(event.date).toUpperCase()}
         </time>
         <span className={styles.categoryLabel} style={{ color }} aria-hidden="true">
-          {event.category}
+          {categoryLabel}
         </span>
       </Link>
 

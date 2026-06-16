@@ -64,10 +64,36 @@ export interface GalleryAlbum {
   date: string;
   photoCount: number;
   coverUrl: string;
+  yandexDiskUrl?: string | null;
+}
+
+export interface Photo {
+  id: string;
+  url: string;
+  caption?: string | null;
+}
+
+export interface GalleryAlbumDetail extends GalleryAlbum {
+  photos: Photo[];
 }
 
 export interface ContactFormData {
   name: string;
-  email: string;
+  phone: string;
   message: string;
+}
+
+export interface PaginationMeta {
+  total: number;
+  offset: number;
+  limit: number;
+}
+
+export interface Paginated<T> {
+  data: T[];
+  meta: PaginationMeta;
+}
+
+export interface ApiItem<T> {
+  data: T;
 }

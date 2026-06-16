@@ -1,6 +1,6 @@
 // src/shared/api/client.ts
 
-const BASE_URL = import.meta.env.VITE_API_URL ?? '/api';
+const BASE_URL = import.meta.env.VITE_API_URL ?? '/api/v1';
 
 interface RequestOptions extends RequestInit {
   params?: Record<string, string>;

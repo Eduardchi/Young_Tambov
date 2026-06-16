@@ -37,7 +37,7 @@
 // ── Blocks ───────────────────────────────────────────────────────────────────
 
 .blocks {
-  padding-bottom: var(--spacing-16);
+  padding-bottom: var(--spacing-20);
 }
 
 .blocksInner {
@@ -48,10 +48,10 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: var(--spacing-5);
 
-  @include respond-to('mobile') { grid-template-columns: 1fr; }
+  @include respond-to('tablet') { grid-template-columns: 1fr; }
 }
 
 // ── Card ─────────────────────────────────────────────────────────────────────
@@ -66,9 +66,9 @@
   gap: var(--spacing-5);
 }
 
-.cardHeader {
+.cardTop {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: var(--spacing-4);
 }
 
@@ -82,6 +82,7 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  margin-top: 2px;
 }
 
 .orgName {
@@ -89,59 +90,116 @@
   font-weight: 800;
   color: var(--color-white);
   text-transform: uppercase;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.02em;
+  line-height: 1.35;
 }
 
-// ── Entries ──────────────────────────────────────────────────────────────────
+// ── Website link ─────────────────────────────────────────────────────────────
 
-.entries {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-4);
-}
-
-.entry {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  padding-top: var(--spacing-4);
-  border-top: 1px solid var(--color-border);
-
-  &:first-child {
-    padding-top: 0;
-    border-top: none;
-  }
-}
-
-.entryLabel {
-  font-family: var(--font-heading);
-  font-size: 0.6rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+.website {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  font-size: var(--text-sm);
+  font-weight: 600;
   color: var(--color-accent);
+  border: 1px solid var(--color-accent-dim);
+  border-radius: var(--radius-full);
+  padding: 5px var(--spacing-3);
+  width: fit-content;
+  transition: background var(--transition-fast), border-color var(--transition-fast);
+
+  &:hover {
+    background: var(--color-accent-dim);
+    border-color: var(--color-accent);
+  }
+
+  @include focus-ring;
 }
 
-.entryPhone {
-  font-size: var(--text-lg);
+// ── Socials ──────────────────────────────────────────────────────────────────
+
+.socials {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-2);
+}
+
+.socialLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px var(--spacing-3);
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-border-2);
+  background: var(--color-bg-card-2);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--color-text-2);
+  transition: color var(--transition-fast), border-color var(--transition-fast),
+              background var(--transition-fast);
+
+  &:hover {
+    color: var(--color-white);
+    border-color: var(--color-border-3);
+    background: var(--color-bg-input);
+  }
+
+  @include focus-ring;
+}
+
+// ── Details ──────────────────────────────────────────────────────────────────
+
+.details {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+  border-top: 1px solid var(--color-border);
+  padding-top: var(--spacing-4);
+}
+
+.detail {
+  display: grid;
+  grid-template-columns: 20px 1fr;
+  gap: var(--spacing-3);
+  align-items: baseline;
+}
+
+.detailIcon {
+  color: var(--color-text-3);
+  display: flex;
+  padding-top: 2px;
+}
+
+.detailValue {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.phone {
+  font-size: var(--text-base);
   font-weight: 700;
   color: var(--color-white);
   transition: color var(--transition-fast);
+  width: fit-content;
 
   &:hover { color: var(--color-accent); }
   @include focus-ring;
 }
 
-.entryAddress,
-.entryEmail {
+.email {
   font-size: var(--text-sm);
   color: var(--color-text-2);
-  line-height: 1.4;
-}
-
-.entryEmail {
   transition: color var(--transition-fast);
+  width: fit-content;
+
   &:hover { color: var(--color-accent); }
   @include focus-ring;
 }
 
+.address {
+  font-size: var(--text-sm);
+  color: var(--color-text-2);
+  line-height: 1.5;
+}

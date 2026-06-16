@@ -30,11 +30,15 @@
   }
 }
 
-.image {
+.placeholderSvg {
+  display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  transition: transform var(--transition-slow);
+
+  @include respond-to('mobile') {
+    aspect-ratio: 16/9;
+    height: auto;
+  }
 }
 
 .content {
@@ -73,6 +77,13 @@
   color: var(--color-text);
   line-height: 1.25;
   text-transform: uppercase;
+}
+
+.audience {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--color-text-3);
+  text-transform: none;
 }
 
 .desc {

@@ -20,7 +20,8 @@
   padding-inline: var(--container-padding);
   height: 100%;
   @include flex-between;
-  gap: var(--spacing-8);
+  gap: var(--spacing-4);
+  min-width: 0;
 }
 
 // ── Logo ─────────────────────────────────────────────────────────────────────
@@ -71,25 +72,28 @@
 
 .nav {
   flex: 1;
+  min-width: 0;
+  overflow: hidden;
 
-  @include respond-to('tablet') { display: none; }
+  @media (max-width: 1280px) { display: none; }
 }
 
 .navList {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: var(--spacing-1);
+  gap: 0;
+  flex-wrap: nowrap;
 }
 
 .navLink {
   display: block;
-  padding: var(--spacing-2) var(--spacing-3);
+  padding: var(--spacing-2) 0.32rem;
   border-radius: var(--radius-sm);
   font-family: var(--font-heading);
-  font-size: 0.7rem;
+  font-size: 0.6rem;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--color-text-2);
   transition: color var(--transition-fast), background var(--transition-fast);
@@ -122,7 +126,7 @@
   &:hover { background: var(--color-bg-card); }
   @include focus-ring;
 
-  @include respond-to('tablet') { display: flex; }
+  @media (max-width: 1280px) { display: flex; }
 }
 
 .burgerLine {
